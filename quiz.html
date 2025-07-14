@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LeftQuiz - Sovversione ↔ Riformismo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff0f0;
+      color: #1f1f1f;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 700px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      padding: 40px 30px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+      min-width: 120px;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .r1 { background-color: #b71c1c; }
+    .r2 { background-color: #c62828; }
+    .r3 { background-color: #e53935; }
+    .r4 { background-color: #f44336; } /* Dipende */
+    .r5 { background-color: #ef5350; }
+    .r6 { background-color: #f06292; }
+    .r7 { background-color: #f8bbd0; color: black; }
+
+    .result {
+      font-size: 1.3rem;
+      margin-top: 40px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 id="question">Caricamento domanda...</h2>
+  <div class="buttons" id="answers">
+    <button class="btn r1" data-value="1">Completamente d'accordo</button>
+    <button class="btn r2" data-value="2">D'accordo</button>
+    <button class="btn r3" data-value="3">Parzialmente d'accordo</button>
+    <button class="btn r4" data-value="4">Dipende</button>
+    <button class="btn r5" data-value="5">Parzialmente in disaccordo</button>
+    <button class="btn r6" data-value="6">In disaccordo</button>
+    <button class="btn r7" data-value="7">Completamente in disaccordo</button>
+  </div>
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  const questions = [
+    "1. È necessario abbattere l'attuale sistema politico per costruirne uno nuovo.",
+    "2. La democrazia liberale non può portare a una vera giustizia sociale.",
+    "3. Le riforme graduali sono inefficaci rispetto a cambiamenti radicali.",
+    "4. Il potere deve essere preso con mezzi rivoluzionari se necessario.",
+    "5. Le istituzioni attuali sono corrotte e devono essere sovvertite.",
+    "6. Cambiare profondamente la società richiede una rottura netta con il passato.",
+    "7. Le leggi devono favorire i lavoratori più che i capitalisti.",
+    "8. Le trasformazioni sociali profonde non possono passare attraverso elezioni tradizionali.",
+    "9. La rivoluzione è l'unica via per una società giusta.",
+    "10. Le strutture di potere esistenti vanno completamente smantellate."
+  ];
+
+  let current = 0;
+  let answers = [];
+
+  const questionEl = document.getElementById("question");
+  const buttons = document.querySelectorAll(".btn");
+  const resultBox = document.getElementById("result");
+
+  function loadQuestion() {
+    if (current < questions.length) {
+      questionEl.textContent = questions[current];
+    } else {
+      showResult();
+    }
+  }
+
+  function showResult() {
+    document.getElementById("answers").style.display = "none";
+    const avg = answers.reduce((a, b) => a + b, 0) / answers.length;
+    let label = "";
+
+    if (avg <= 2.5) label = "Sovversivo";
+    else if (avg <= 3.5) label = "Tendenzialmente Sovversivo";
+    else if (avg <= 4.5) label = "Neutrale";
+    else if (avg <= 5.5) label = "Tendenzialmente Riformista";
+    else label = "Riformista";
+
+    resultBox.innerHTML = `Hai completato il quiz!<br><br><strong>Risultato:</strong> ${label}<br>(Media: ${avg.toFixed(2)})`;
+  }
+
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const value = parseInt(btn.getAttribute("data-value"));
+      answers.push(value);
+      current++;
+      loadQuestion();
+    });
+  });
+
+  loadQuestion();
+</script>
+
+</body>
+</html>
