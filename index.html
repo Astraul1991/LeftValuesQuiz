@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LeftQuiz - Home</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #fff5f5;
+      color: #1f1f1f;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    main {
+      max-width: 600px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 40px 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #b30000;
+    }
+
+    p.description {
+      font-weight: 400;
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: #4b4b4b;
+      margin-bottom: 40px;
+    }
+
+    a.start-btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #cc0000, #990000);
+      color: white;
+      padding: 16px 48px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 15px rgba(204, 0, 0, 0.4);
+    }
+
+    a.start-btn:hover {
+      background: linear-gradient(90deg, #990000, #cc0000);
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #999;
+    }
+
+    @media (max-width: 480px) {
+      main {
+        padding: 30px 20px;
+      }
+      h1 {
+        font-size: 2rem;
+      }
+      a.start-btn {
+        padding: 14px 36px;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>LeftQuiz</h1>
+    <p class="description">
+      LeftQuiz è un test politico che ti aiuta a capire dove ti posizioni su una serie di assi ideologici.  
+      Questo quiz si concentra sulle differenze tra approcci sovversivi e riformisti all'interno del pensiero di sinistra.  
+      Rispondi con sincerità: non ci sono risposte giuste o sbagliate.
+    </p>
+    <a href="quiz.html" class="start-btn">Inizia il Test</a>
+  </main>
+
+  <footer>
+    &copy; 2025 LeftQuiz. Tutti i diritti riservati.
+  </footer>
+
+</body>
+</html>
