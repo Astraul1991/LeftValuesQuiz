@@ -1,214 +1,173 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Risultati del Quiz Politico</title>
+  <meta charset="UTF-8">
+  <title>Risultati - Quiz Politico</title>
+  <link rel="stylesheet" href="stile.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Arial", sans-serif;
+      color: white;
       background-color: #1a1a1a;
-      color: #fff;
-      padding: 20px;
+      padding: 2rem;
     }
 
-    h1 {
-      text-align: center;
-      color: #ff5555;
-    }
-
-    .axis-container {
-      margin-bottom: 40px;
-    }
-
-    .axis-title {
-      font-size: 20px;
-      margin-bottom: 8px;
-    }
-
-    .bar-wrapper {
-      display: flex;
-      align-items: center;
-    }
-
-    .label {
-      width: 100px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 14px;
+    .result-container {
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .bar {
-      flex: 1;
       height: 30px;
-      position: relative;
       display: flex;
+      border: 1px solid #666;
+      background-color: #333;
+      margin-top: 0.5rem;
+      position: relative;
     }
 
-    .left-bar {
-      background-color: #ff6666;
+    .bar-fill {
       height: 100%;
+      display: inline-block;
     }
 
-    .right-bar {
-      background-color: #66b3ff;
-      height: 100%;
+    .bar-text {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.2rem;
     }
 
-    .bar-label {
-      position: absolute;
-      top: 3px;
-      font-size: 14px;
+    .label {
       font-weight: bold;
+    }
+
+    .left-icon,
+    .right-icon {
+      width: 30px;
+      height: 30px;
+      background-color: #ccc;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .bar-percent {
+      position: absolute;
+      width: 100%;
+      top: 5px;
+      text-align: center;
+      font-size: 14px;
       color: #fff;
     }
 
-    .left-percent {
-      left: 10px;
-    }
-
-    .right-percent {
-      right: 10px;
-    }
-
-    .icon-box {
-      width: 40px;
-      height: 40px;
-      margin: 0 10px;
-      background-color: #fff;
+    .back-button {
+      margin-top: 2rem;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #aa0000;
+      color: white;
+      text-decoration: none;
       border-radius: 5px;
-      overflow: hidden;
-    }
-
-    .icon-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
     }
   </style>
 </head>
 <body>
-  <h1>Risultati del Quiz Politico</h1>
-
-  <div id="results"></div>
+  <div class="result-container">
+    <h1>Risultati del tuo orientamento</h1>
+    <div id="results"></div>
+    <a href="quiz.html" class="back-button">Ricomincia il quiz</a>
+  </div>
 
   <script>
     const axes = [
-      {
-        name: "Insurrezionalismo ↔ Riformismo",
-        left: "Insurrezionalismo",
-        right: "Riformismo",
-        scores: JSON.parse(localStorage.getItem("axis_0")) || [0, 0],
-        iconL: "img/p1.png",
-        iconR: "img/p2.png"
-      },
-      {
-        name: "Partitismo ↔ Sindacalismo",
-        left: "Partitismo",
-        right: "Sindacalismo",
-        scores: JSON.parse(localStorage.getItem("axis_1")) || [0, 0],
-        iconL: "img/p3.png",
-        iconR: "img/p4.png"
-      },
-      {
-        name: "Centralismo ↔ Decentralismo",
-        left: "Centralismo",
-        right: "Decentralismo",
-        scores: JSON.parse(localStorage.getItem("axis_2")) || [0, 0],
-        iconL: "img/p5.png",
-        iconR: "img/p6.png"
-      },
-      {
-        name: "Autoritarismo ↔ Libertarismo",
-        left: "Autoritarismo",
-        right: "Libertarismo",
-        scores: JSON.parse(localStorage.getItem("axis_3")) || [0, 0],
-        iconL: "img/p7.png",
-        iconR: "img/p8.png"
-      }
+      { left: "Insurrezionalismo", right: "Riformismo" },
+      { left: "Partitismo", right: "Sindacalismo" },
+      { left: "Centralismo", right: "Decentralismo" },
+      { left: "Autoritarismo", right: "Libertarismo" },
     ];
 
-    function createBar(leftPercent, rightPercent, leftLabel, rightLabel, iconL, iconR) {
-      const container = document.createElement("div");
-      container.className = "axis-container";
+    const maxScores = [30, 15, 10]; // Alto, Medio, Basso
 
-      const title = document.createElement("div");
-      title.className = "axis-title";
-      title.innerText = `${leftLabel} ↔ ${rightLabel}`;
-      container.appendChild(title);
+    const points = JSON.parse(localStorage.getItem('politicalQuizPoints')) || [];
+    const levels = JSON.parse(localStorage.getItem('politicalQuizLevels')) || [];
 
-      const barWrapper = document.createElement("div");
-      barWrapper.className = "bar-wrapper";
+    const axesCount = 4;
+    const questionsPerAxis = 10;
+    const resultsDiv = document.getElementById("results");
 
-      const leftIcon = document.createElement("div");
-      leftIcon.className = "icon-box";
-      leftIcon.innerHTML = `<img src="${iconL}" alt="">`;
+    for (let i = 0; i < axesCount; i++) {
+      const start = i * questionsPerAxis;
+      const end = start + questionsPerAxis;
 
-      const rightIcon = document.createElement("div");
-      rightIcon.className = "icon-box";
-      rightIcon.innerHTML = `<img src="${iconR}" alt="">`;
+      let totalLeft = 0;
+      let totalRight = 0;
+      let totalPossible = 0;
 
-      const leftText = document.createElement("div");
-      leftText.className = "label";
-      leftText.innerText = leftLabel;
+      for (let j = start; j < end; j++) {
+        const answer = points[j];
+        const level = levels[j];
 
-      const rightText = document.createElement("div");
-      rightText.className = "label";
-      rightText.innerText = rightLabel;
+        let value = 0;
+        if (answer === 0) continue; // Nessuna risposta
+        else if (answer === 1) value = level === "alto" ? 3 : level === "medio" ? 1.5 : 1;
+        else if (answer === 2) value = level === "alto" ? 2 : level === "medio" ? 1 : 0.5;
+        else if (answer === 3) value = level === "alto" ? 1 : level === "medio" ? 0.5 : 0.25;
+        else continue; // altro tipo
 
-      const bar = document.createElement("div");
-      bar.className = "bar";
+        // Risposte da 1 a 3 = lato sinistro. Da 5 a 7 = lato destro.
+        if (answer >= 1 && answer <= 3) totalLeft += value;
+        else if (answer >= 5 && answer <= 7) totalRight += value;
 
-      const leftBar = document.createElement("div");
-      leftBar.className = "left-bar";
-      leftBar.style.width = leftPercent + "%";
+        // Calcola massimo teorico possibile per quella domanda
+        totalPossible += level === "alto" ? 3 : level === "medio" ? 1.5 : 1;
+      }
 
-      const rightBar = document.createElement("div");
-      rightBar.className = "right-bar";
-      rightBar.style.width = rightPercent + "%";
-
-      const leftPercentLabel = document.createElement("div");
-      leftPercentLabel.className = "bar-label left-percent";
-      leftPercentLabel.innerText = leftPercent.toFixed(1) + "%";
-
-      const rightPercentLabel = document.createElement("div");
-      rightPercentLabel.className = "bar-label right-percent";
-      rightPercentLabel.innerText = rightPercent.toFixed(1) + "%";
-
-      bar.appendChild(leftBar);
-      bar.appendChild(rightBar);
-      bar.appendChild(leftPercentLabel);
-      bar.appendChild(rightPercentLabel);
-
-      barWrapper.appendChild(leftIcon);
-      barWrapper.appendChild(leftText);
-      barWrapper.appendChild(bar);
-      barWrapper.appendChild(rightText);
-      barWrapper.appendChild(rightIcon);
-
-      container.appendChild(barWrapper);
-      return container;
-    }
-
-    const resultDiv = document.getElementById("results");
-
-    axes.forEach((axis, i) => {
-      const [leftScore, rightScore] = axis.scores;
-      const total = leftScore + rightScore || 1;
-      const leftPercent = (leftScore / total) * 100;
+      const leftPercent = Math.round((totalLeft / totalPossible) * 100);
       const rightPercent = 100 - leftPercent;
 
-      const bar = createBar(
-        leftPercent,
-        rightPercent,
-        axis.left,
-        axis.right,
-        axis.iconL,
-        axis.iconR
-      );
+      const axis = axes[i];
 
-      resultDiv.appendChild(bar);
-    });
+      const barContainer = document.createElement("div");
+      barContainer.classList.add("bar-block");
+
+      const labelRow = document.createElement("div");
+      labelRow.classList.add("bar-text");
+
+      const leftLabel = document.createElement("div");
+      leftLabel.classList.add("label");
+      leftLabel.innerHTML = `<span class="left-icon"></span>${axis.left}`;
+
+      const rightLabel = document.createElement("div");
+      rightLabel.classList.add("label");
+      rightLabel.innerHTML = `${axis.right}<span class="right-icon"></span>`;
+
+      labelRow.appendChild(leftLabel);
+      labelRow.appendChild(rightLabel);
+
+      const bar = document.createElement("div");
+      bar.classList.add("bar");
+
+      const barFillLeft = document.createElement("div");
+      barFillLeft.classList.add("bar-fill");
+      barFillLeft.style.width = leftPercent + "%";
+      barFillLeft.style.backgroundColor = "#c62828";
+
+      const barFillRight = document.createElement("div");
+      barFillRight.classList.add("bar-fill");
+      barFillRight.style.width = rightPercent + "%";
+      barFillRight.style.backgroundColor = "#6a1b9a";
+
+      const barPercent = document.createElement("div");
+      barPercent.classList.add("bar-percent");
+      barPercent.innerText = `${leftPercent}% - ${rightPercent}%`;
+
+      bar.appendChild(barFillLeft);
+      bar.appendChild(barFillRight);
+      bar.appendChild(barPercent);
+
+      barContainer.appendChild(labelRow);
+      barContainer.appendChild(bar);
+      resultsDiv.appendChild(barContainer);
+    }
   </script>
 </body>
 </html>
