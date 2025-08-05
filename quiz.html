@@ -58,6 +58,7 @@
       transform: scale(1.02);
     }
 
+    /* colori */
     .green-3 { background-color: #1b5e20; }
     .green-2 { background-color: #43a047; }
     .green-1 { background-color: #a5d6a7; }
@@ -130,121 +131,60 @@
 </div>
 
 <script>
-const questions = [
-  { text: "L'unico modo in cui è possibile cambiare la società è attraverso riforme e compromessi.", level: "alto" },
-  { text: "Generalmente le rivoluzioni portano più danni che benefici.", level: "medio" },
-  { text: "Neanche contro governi autoritari è ammissibile l'uso della violenza.", level: "medio" },
-  { text: "Il cambiamento sociale dev'essere graduale.", level: "medio" },
-  { text: "Quando ogni altra possibilità è esaurita, dovrebbe essere presa in considerazione la rivolta violenta.", level: "basso" },
-  { text: "Il nostro partito deve sfruttare le elezioni democratiche per salire al potere.", level: "basso" },
-  { text: "In tempo di pace, è necessario partecipare alla democrazia liberale. In tempo di guerra, bisogna fare la rivoluzione.", level: "medio" },
-  { text: "La rivoluzione è la strada migliore per realizzare un cambiamento radicale della società.", level: "medio" },
-  { text: "La completa socializzazione dell'economia è meglio di una riforma graduale del capitalismo.", level: "medio" },
-  { text: "Il nostro movimento non dovrebbe partecipare alla politica liberale.", level: "alto" },
-  { text: "Solo un partito dei lavoratori di massa può raggiungere risultati a lungo termine.", level: "alto" },
-  { text: "I sindacati non hanno una visione d’insieme e non possono guidare la lotta politica.", level: "medio" },
-  { text: "La lotta sul posto di lavoro è importante, ma senza una strategia politica rischia di essere inutile.", level: "medio" },
-  { text: "I sindacati attuali sono corrotti e non sono un buon mezzo per cambiare la società.", level: "medio" },
-  { text: "Il parlamentarismo non è perfetto, ma resta uno strumento fondamentale se usato da un partito dei lavoratori.", level: "basso" },
-  { text: "Gli scioperi sono un buon metodo per ottenere diritti.", level: "basso" },
-  { text: "Il fatto che tanti lavoratori votino per partiti borghesi piuttosto che per partiti socialisti è la prova che la politica di partito non è più rilevante.", level: "medio" },
-  { text: "La progressione dei partiti al socialismo sfocerà sempre nell'autoritarismo.", level: "medio" },
-  { text: "I sindacati dovrebbero costituire la base della società.", level: "medio" },
-  { text: "Un miglioramento della società arriverà solo tramite il lavoro sindacale.", level: "alto" },
-  { text: "L'economia dovrebbe essere completamente gestita dal governo.", level: "alto" },
-  { text: "Un'economia centralmente pianificata è la più efficace per lo sviluppo dei paesi del terzo mondo.", level: "medio" },
-  { text: "Lo Stato dovrebbe assegnare i posti di lavoro ai cittadini.", level: "medio" },
-  { text: "Il governo dovrebbe regolamentare l'economia.", level: "medio" },
-  { text: "Il governo centrale dovrebbe fornire linee guida generali, ma lasciare l’attuazione ai livelli locali.", level: "basso" },
-  { text: "La democrazia sul posto di lavoro è un obiettivo auspicabile.", level: "basso" },
-  { text: "Un governo centrale troppo forte rischia di limitare la libertà economica dell'individuo e delle comunità locali.", level: "medio" },
-  { text: "Un'economia è generalmente progettata meglio quando è organizzata dal basso verso l'alto piuttosto che dall'alto verso il basso.", level: "medio" },
-  { text: "La burocrazia e l'inefficienza sono sempre associate alle economie centralmente pianificate.", level: "medio" },
-  { text: "Le aziende dovrebbero essere completamente autogestite, senza alcuna influenza del governo.", level: "alto" },
-  { text: "Lo Stato dev'essere totalitario.", level: "alto" },
-  { text: "Una figura autoritaria moralmente corretta è un bene per la società.", level: "medio" },
-  { text: "Se non hai nulla da nascondere, non hai nulla da temere.", level: "medio" },
-  { text: "In momenti di crisi, le libertà civili possono essere sospese per la sicurezza dei cittadini.", level: "medio" },
-  { text: "Il contratto sociale consiste nel rinunciare volontariamente a parte delle proprie libertà individuali per garantire il benessere collettivo.", level: "basso" },
-  { text: "Sono contrario a ogni forma di dittatura imposta dall'alto.", level: "basso" },
-  { text: "La democrazia è fondamentale.", level: "medio" },
-  { text: "Lo Stato non dovrebbe influenzare la vita privata dei cittadini.", level: "medio" },
-  { text: "Ammesso che esista, lo Stato dovrebbe essere limitato alle attività che il singolo non può gestire autonomamente.", level: "medio" },
-  { text: "Lo Stato è soltanto un organo di oppressione di classe e va soppresso completamente.", level: "alto" }
-];
+  const questions = [
+    { text: "L'unico modo in cui è possibile cambiare la società è attraverso riforme e compromessi.", level: "alto" },
+    { text: "Generalmente le rivoluzioni portano più danni che benefici.", level: "medio" },
+    { text: "Neanche contro governi autoritari è ammissibile l'uso della violenza.", level: "medio" },
+    { text: "Il cambiamento sociale dev'essere graduale.", level: "medio" },
+    { text: "Quando ogni altra possibilità è esaurita, dovrebbe essere presa in considerazione la rivolta violenta.", level: "basso" },
+    { text: "Il nostro partito deve sfruttare le elezioni democratiche per salire al potere.", level: "basso" },
+    { text: "In tempo di pace, è necessario partecipare alla democrazia liberale. In tempo di guerra, bisogna fare la rivoluzione.", level: "medio" },
+    { text: "La rivoluzione è la strada migliore per realizzare un cambiamento radicale della società.", level: "medio" },
+    { text: "La completa socializzazione dell'economia è meglio di una riforma graduale del capitalismo.", level: "medio" },
+    { text: "Il nostro movimento non dovrebbe partecipare alla politica liberale.", level: "alto" },
+    { text: "Solo un partito dei lavoratori di massa può raggiungere risultati a lungo termine.", level: "alto" },
+    { text: "I sindacati non hanno una visione d’insieme e non possono guidare la lotta politica.", level: "medio" },
+    { text: "La lotta sul posto di lavoro è importante, ma senza una strategia politica rischia di essere inutile.", level: "medio" },
+    { text: "I sindacati attuali sono corrotti e non sono un buon mezzo per cambiare la società.", level: "medio" },
+    { text: "Il parlamentarismo non è perfetto, ma resta uno strumento fondamentale se usato da un partito dei lavoratori.", level: "basso" },
+    { text: "Gli scioperi sono un buon metodo per ottenere diritti.", level: "basso" },
+    { text: "Il fatto che tanti lavoratori votino per partiti borghesi piuttosto che per partiti socialisti è la prova che la politica di partito non è più rilevante.", level: "medio" },
+    { text: "La progressione dei partiti al socialismo sfocerà sempre nell'autoritarismo.", level: "medio" },
+    { text: "I sindacati dovrebbero costituire la base della società.", level: "medio" },
+    { text: "Un miglioramento della società arriverà solo tramite il lavoro sindacale.", level: "alto" },
+    { text: "L'economia dovrebbe essere completamente gestita dal governo.", level: "alto" },
+    { text: "Un'economia centralmente pianificata è la più efficace per lo sviluppo dei paesi del terzo mondo.", level: "medio" },
+    { text: "Lo Stato dovrebbe assegnare i posti di lavoro ai cittadini.", level: "medio" },
+    { text: "Il governo dovrebbe regolamentare l'economia.", level: "medio" },
+    { text: "Il governo centrale dovrebbe fornire linee guida generali, ma lasciare l’attuazione ai livelli locali.", level: "basso" },
+    { text: "La democrazia sul posto di lavoro è un obiettivo auspicabile.", level: "basso" },
+    { text: "Un governo centrale troppo forte rischia di limitare la libertà economica dell'individuo e delle comunità locali.", level: "medio" },
+    { text: "Un'economia è generalmente progettata meglio quando è organizzata dal basso verso l'alto piuttosto che dall'alto verso il basso.", level: "medio" },
+    { text: "La burocrazia e l'inefficienza sono sempre associate alle economie centralmente pianificate.", level: "medio" },
+    { text: "Le aziende dovrebbero essere completamente autogestite, senza alcuna influenza del governo.", level: "alto" },
+    { text: "Lo Stato dev'essere totalitario.", level: "alto" },
+    { text: "Una figura autoritaria moralmente corretta è un bene per la società.", level: "medio" },
+    { text: "Se non hai nulla da nascondere, non hai nulla da temere.", level: "medio" },
+    { text: "In momenti di crisi, le libertà civili possono essere sospese per la sicurezza dei cittadini.", level: "medio" },
+    { text: "Il contratto sociale consiste nel rinunciare volontariamente a parte delle proprie libertà individuali per garantire il benessere collettivo.", level: "basso" },
+    { text: "Sono contrario a ogni forma di dittatura imposta dall'alto.", level: "basso" },
+    { text: "La democrazia è fondamentale.", level: "medio" },
+    { text: "Lo Stato non dovrebbe influenzare la vita privata dei cittadini.", level: "medio" },
+    { text: "Ammesso che esista, lo Stato dovrebbe essere limitato alle attività che il singolo non può gestire autonomamente.", level: "medio" },
+    { text: "Lo Stato è soltanto un organo di oppressione di classe e va soppresso completamente.", level: "alto" }
+  ];
 
-const weights = {
-  alto: [3, 2, 1],
-  medio: [1.5, 1, 0.5],
-  basso: [1, 0.5, 0.25]
-};
+  const weights = {
+    alto: [3, 2, 1],
+    medio: [1.5, 1, 0.5],
+    basso: [1, 0.5, 0.25]
+  };
 
-const answerColors = ["green-3", "green-2", "green-1", "gray", "red-1", "red-2", "red-3"];
+  const answerColors = ["green-3", "green-2", "green-1", "gray", "red-1", "red-2", "red-3"];
 
-const options = [
-  "Completamente d'accordo",
-  "D'accordo",
-  "Parzialmente d'accordo",
-  "Dipende",
-  "Parzialmente in disaccordo",
-  "In disaccordo",
-  "Completamente in disaccordo"
-];
-
-let current = 0;
-let answers = new Array(questions.length).fill(null);
-
-const questionEl = document.getElementById("question");
-const answersEl = document.getElementById("answers");
-const counterEl = document.getElementById("counter");
-const backBtn = document.getElementById("backBtn");
-const finalMessage = document.getElementById("finalMessage");
-
-function renderQuestion() {
-  if (current >= questions.length) {
-    questionEl.style.display = 'none';
-    answersEl.style.display = 'none';
-    backBtn.style.display = 'none';
-    counterEl.style.display = 'none';
-    finalMessage.style.display = 'block';
-    return;
-  }
-
-  const q = questions[current];
-  questionEl.textContent = q.text;
-  counterEl.textContent = `Domanda ${current + 1} di ${questions.length}`;
-  answersEl.innerHTML = "";
-
-  options.forEach((text, index) => {
-    const btn = document.createElement("button");
-    btn.className = `answer-btn ${answerColors[index]}`;
-    btn.textContent = text;
-    btn.onclick = () => {
-      let score = 0;
-      if (index < 3) {
-        score = weights[q.level][index];
-      } else if (index > 3) {
-        score = -weights[q.level][6 - index];
-      }
-      answers[current] = score;
-      current++;
-      renderQuestion();
-    };
-    answersEl.appendChild(btn);
-  });
-
-  backBtn.disabled = current === 0;
-}
-
-function goBack() {
-  if (current > 0) {
-    current--;
-    renderQuestion();
-  }
-}
-
-renderQuestion();
-</script>
-
-</body>
-</html>
+  const options = [
+    "Completamente d'accordo",
+    "D'accordo",
+    "Parzialmente d'accordo",
+    "Dipende",
+    "Parzialmente in disaccordo
